@@ -1,8 +1,22 @@
 library(testthat)
 
+test_that("Workspace'teki tüm değişkenleri silme", {
+  rm(list = ls())
+  expect_equal(length(ls()), 0)
+})
+
+test_that("Eğer mevcut ise veri setini silme", {
+  if ("MapsThatChangedOurWorld_StoryMap_Data.csv" %in% list.files()) {
+    file.remove("MapsThatChangedOurWorld_StoryMap_Data.csv")
+  }
+  expect_equal("MapsThatChangedOurWorld_StoryMap_Data.csv" %in% list.files(), FALSE)
+})
+
 current_dir <- getwd()
 relative_path <- file.path(current_dir,"Labex1_Q1_210401065_onur_uresin.R")
 source(relative_path)
+
+
 
 test_that("Test : MapsThatChangedOurWorld_StoryMap_Data.csv adlı dosya belirtilen dizinde mevcuttur.", {
   file_path <- file.path(current_dir,"MapsThatChangedOurWorld_StoryMap_Data.csv")
@@ -43,4 +57,16 @@ test_that("Test : idx nesnesinin tipi (class'ı) integer'dir.", {
 
 test_that("Test : Year adlı sütun numeric değerlerden oluşmalıdır.", {
   expect_is(maps$Year, "numeric", info = "Year sütunu numeric değerlerden oluşmuyor.")
+})
+
+test_that("Longitude adlı sütunun 3., 9. ve 10. elementleri negatif numeric değerler içermelidir", {
+  testthat::expect_true(maps$Longitude[3] < 0)
+  testthat::expect_true(maps$Longitude[9] < 0)
+  testthat::expect_true(maps$Longitude[10] < 0)})
+
+test_that(" finalResult adlı değiken vardır, bir data.frame’dir, 3 sütundan oluşmalıdır ve sütun isimleri sırasıyla Longitude, Latitude ve Year olmalıdır", {
+  testthat::expect_true(exists("finalResult", envir = .GlobalEnv))
+  testthat::expect_true(is.data.frame(finalResult))
+  testthat::expect_equal(ncol(finalResult), 3)
+  testthat::expect_equal(colnames(finalResult), c("Longitude", "Latitude", "Year"))
 })
