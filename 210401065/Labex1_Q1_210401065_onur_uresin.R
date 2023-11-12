@@ -16,3 +16,6 @@ maps$Year<-gsub("AD","",as.character(maps$Year))
 
 maps$Longitude<-as.numeric(maps$Longitude)
 maps$Latitude<-as.numeric(maps$Latitude)
+
+maps$Year<-as.numeric(maps$Year)
+hist(maps$Year,breaks = 10)
