@@ -5,3 +5,5 @@ df <- read.csv("./MapsThatChangedOurWorld_StoryMap_Data.csv", sep = ";")
 maps <- data.frame(df)
 
 maps$Latitude<-gsub("N","",as.character(maps$Latitude))
+
+idx <- grep("[W]",maps$Longitude)
