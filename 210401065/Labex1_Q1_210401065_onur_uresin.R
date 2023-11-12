@@ -7,3 +7,6 @@ maps <- data.frame(df)
 maps$Latitude<-gsub("N","",as.character(maps$Latitude))
 
 idx <- grep("[W]",maps$Longitude)
+
+maps$Longitude<-gsub("E","",as.character(maps$Longitude))
+maps$Longitude<-gsub("W","",as.character(maps$Longitude))
